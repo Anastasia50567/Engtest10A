@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Focus 2 • Unit 6: Work — Interactive Lab (Grade 10)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    :root {
+      --violet-900: #2e1065;
+      --violet-700: #6d28d9;
+      --violet-600: #7c3aed;
+      --violet-500: #8b5cf6;
+      --violet-100: #ede9fe;
+      --violet-50: #f5f3ff;
+      --magenta-600: #db2777;
+      --magenta-500: #ec4899;
+      --magenta-100: #fce7f3;
+      --ink: #1e1b4b;
+      --muted: #5b21b6;
+      --slate: #4c1d95;
+      --card: #ffffff;
+      --border: #ddd6fe;
+      --success: #15803d;
+      --success-bg: #dcfce7;
+      --error: #be123c;
+      --error-bg: #ffe4e6;
+      --radius: 20px;
+      --shadow: 0 14px 30px -6px rgba(109, 40, 217, 0.16), 0 6px 14px -4px rgba(219, 39, 119, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(160deg, #f5f3ff 0%, #fae8ff 50%, #ede9fe 100%);
+      color: var(--ink);
+      line-height: 1.55;
+      min-height: 100vh;
+      padding-bottom: 48px;
+    }
+
+    h1, h2, h3, .brand-font {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Header */
+    .topbar {
+      background: linear-gradient(90deg, var(--violet-900) 0%, var(--violet-700) 55%, var(--magenta-600) 100%);
+      color: #fff;
+      padding: 14px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 6px 20px rgba(76, 29, 149, 0.25);
+    }
+
+    .topbar-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge-unit {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.74rem;
+      padding: 4px 11px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .student-pill {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .student-pill.visible {
+      display: flex;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 20px 14px;
+    }
+
+    /* Registration Screen */
+    .hero-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--border);
+      margin-top: 8px;
+    }
+
+    .hero-banner {
+      background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 48%, #ec4899 100%);
+      padding: 26px 20px 14px 20px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-svg-wrap {
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .hero-body {
+      padding: 26px 24px 30px 24px;
+    }
+
+    .pill-tag {
+      display: inline-block;
+      background: var(--violet-100);
+      color: var(--violet-700);
+      font-weight: 800;
+      font-size: 0.76rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-title {
+      font-size: clamp(1.5rem, 4.2vw, 2.15rem);
+      color: var(--violet-900);
+      margin-bottom: 8px;
+    }
+
+    .hero-sub {
+      color: #4b5563;
+      font-size: 0.96rem;
+      margin-bottom: 22px;
+    }
+
+    .reg-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .reg-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-body {
+        padding: 20px 16px 24px 16px;
+      }
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+      color: var(--violet-900);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 13px 15px;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      color: var(--ink);
+      background: #faf5ff;
+      transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      background: #fff;
+      border-color: var(--violet-600);
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.16);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.98rem;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.12s, box-shadow 0.2s, filter 0.2s;
+      font-family: inherit;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--violet-600), var(--magenta-600));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.32);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.06);
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--violet-700);
+      border: 2px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--violet-600);
+      background: var(--violet-50);
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    /* Workspace */
+    .workspace {
+      display: none;
+    }
+
+    .workspace.active {
+      display: block;
+    }
+
+    /* Live Cheer Banner */
+    .cheer-bar {
+      background: linear-gradient(90deg, #ede9fe, #fce7f3);
+      border: 1.5px solid #e9d5ff;
+      border-radius: 14px;
+      padding: 11px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--violet-900);
+    }
+
+    .progress-wrap {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.06);
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--violet-900);
+      margin-bottom: 8px;
+    }
+
+    .progress-track {
+      height: 10px;
+      background: var(--violet-100);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 25%;
+      background: linear-gradient(90deg, var(--violet-600), var(--magenta-500));
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    /* Stepper Pills */
+    .step-pills {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .step-pills {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .step-pill {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .step-pill.active {
+      border-color: var(--violet-600);
+      background: linear-gradient(135deg, #f5f3ff, #fdf2f8);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.14);
+    }
+
+    .step-pill-sub {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--magenta-600);
+    }
+
+    .step-pill-title {
+      font-weight: 800;
+      font-size: 0.86rem;
+      color: var(--violet-900);
+    }
+
+    /* Task Cards */
+    .task-card {
+      display: none;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      animation: popIn 0.25s ease;
+    }
+
+    .task-card.active {
+      display: block;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .task-card {
+        padding: 18px 14px;
+      }
+    }
+
+    .task-head {
+      border-bottom: 1.5px solid var(--violet-100);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .task-head h2 {
+      font-size: 1.28rem;
+      color: var(--violet-900);
+      margin-top: 4px;
+    }
+
+    .instruction-en {
+      background: var(--violet-50);
+      border-left: 4px solid var(--violet-600);
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    /* Drag & Drop */
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      padding: 14px;
+      background: #faf5ff;
+      border: 2px dashed #c4b5fd;
+      border-radius: 16px;
+      min-height: 62px;
+      margin-bottom: 18px;
+    }
+
+    .chip {
+      background: #fff;
+      border: 2px solid var(--violet-600);
+      color: var(--violet-900);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 9px 14px;
+      border-radius: 12px;
+      cursor: grab;
+      user-select: none;
+      touch-action: manipulation;
+      box-shadow: 0 3px 8px rgba(109, 40, 217, 0.1);
+      transition: transform 0.15s, background-color 0.15s, color 0.15s;
+    }
+
+    .chip.selected {
+      background: linear-gradient(135deg, var(--violet-600), var(--magenta-600));
+      border-color: transparent;
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(219, 39, 119, 0.35);
+    }
+
+    .zones-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 740px) {
+      .zones-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .drop-box {
+      background: #fdfaff;
+      border: 2px dashed #a78bfa;
+      border-radius: 16px;
+      padding: 13px;
+      min-height: 155px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .drop-box.over {
+      background: var(--violet-100);
+      border-color: var(--magenta-600);
+    }
+
+    .drop-box-head {
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--violet-700);
+      border-bottom: 1px solid var(--violet-100);
+      padding-bottom: 6px;
+    }
+
+    .drop-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      flex: 1;
+    }
+
+    /* Task 2: Second Conditional Slots */
+    .cond-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .cond-row {
+      background: #faf5ff;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 13px 15px;
+      font-size: 0.96rem;
+      line-height: 1.75;
+    }
+
+    .slot-blank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 148px;
+      min-height: 36px;
+      padding: 2px 12px;
+      margin: 0 4px;
+      border: 2px dashed var(--magenta-500);
+      border-radius: 10px;
+      background: #fff;
+      font-weight: 800;
+      color: var(--violet-700);
+      cursor: pointer;
+      vertical-align: middle;
+      transition: all 0.15s;
+    }
+
+    .slot-blank.filled {
+      border-style: solid;
+      border-color: var(--violet-600);
+      background: var(--violet-100);
+    }
+
+    /* Task 3: HR Simulation */
+    .sim-box {
+      background: linear-gradient(145deg, #2e1065 0%, #4c1d95 60%, #831843 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .hr-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.16);
+    }
+
+    .hr-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f472b6, #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .hr-bubble {
+      background: rgba(255, 255, 255, 0.12);
+      border-left: 4px solid #f472b6;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 0.98rem;
+      margin-bottom: 14px;
+    }
+
+    .sim-choices {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .sim-choice-btn {
+      text-align: left;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1.5px solid rgba(255, 255, 255, 0.24);
+      color: #fff;
+      padding: 12px 15px;
+      border-radius: 12px;
+      font-size: 0.94rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .sim-choice-btn.picked {
+      background: rgba(236, 72, 153, 0.35);
+      border-color: #f9a8d4;
+      font-weight: 700;
+    }
+
+    /* Task 4: Use of English */
+    .uoe-item {
+      background: #faf5ff;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .uoe-q {
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .uoe-opts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .opt-pill {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 2px solid var(--border);
+      background: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--violet-900);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .opt-pill.selected {
+      background: linear-gradient(135deg, var(--violet-600), var(--magenta-600));
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .nav-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    /* FINAL RESULT SCREEN */
+    .final-screen {
+      display: none;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      border: 2px solid var(--violet-500);
+      box-shadow: var(--shadow);
+      animation: popIn 0.3s ease;
+    }
+
+    .final-screen.active {
+      display: block;
+    }
+
+    .result-hero {
+      background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 55%, #db2777 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 26px 20px;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .grade-big {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      font-size: 2.3rem;
+      font-weight: 800;
+      padding: 8px 26px;
+      border-radius: 16px;
+      margin: 12px 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .encourage-box {
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.98rem;
+      margin-top: 8px;
+    }
+
+    .mistakes-section h3 {
+      color: var(--violet-900);
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+
+    .mistake-card {
+      background: #fff1f2;
+      border: 1.5px solid #fecdd3;
+      border-left: 5px solid var(--error);
+      border-radius: 12px;
+      padding: 13px 15px;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+    }
+
+    .mistake-card strong {
+      color: #9f1239;
+    }
+
+    .all-good-card {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-left: 5px solid var(--success);
+      border-radius: 12px;
+      padding: 15px;
+      color: #14532d;
+      font-weight: 700;
+    }
+
+    #pdf-certificate-box {
+      background: #ffffff;
+      color: #1e1b4b;
+      padding: 28px;
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="badge-unit">Focus 2 • Unit 6</span>
+        <strong class="brand-font" style="font-size:1.05rem;">World of Work Lab</strong>
+      </div>
+      <div id="studentPill" class="student-pill">
+        <span id="pillName">Student</span> • <span id="pillClass" style="color:#fbcfe8;">10-А</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- REGISTRATION SCREEN -->
+    <section id="regSection" class="hero-card">
+      <div class="hero-banner">
+        <div class="hero-svg-wrap">
+          <!-- Custom Grade 10 Teen Careers SVG Illustration -->
+          <svg viewBox="0 0 600 220" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="90" cy="45" r="36" fill="rgba(255,255,255,0.12)"/>
+            <circle cx="515" cy="175" r="48" fill="rgba(244,114,182,0.22)"/>
+            <circle cx="310" cy="30" r="22" fill="rgba(255,255,255,0.1)"/>
+            <!-- Card 1: Tech & Coding -->
+            <rect x="35" y="45" width="155" height="130" rx="18" fill="#ffffff" fill-opacity="0.16" stroke="#f5d0fe" stroke-width="2"/>
+            <rect x="65" y="72" width="95" height="58" rx="8" fill="#2e1065"/>
+            <path d="M85 95 L75 101 L85 107 M140 95 L150 101 L140 107 M117 91 L108 111" stroke="#f472b6" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+            <rect x="55" y="132" width="115" height="8" rx="4" fill="#e9d5ff"/>
+            <text x="112" y="160" fill="#ffffff" font-size="12" font-weight="800" text-anchor="middle" font-family="sans-serif">IT &amp; DIGITAL</text>
+            <!-- Card 2: Creative & Design -->
+            <rect x="222" y="32" width="156" height="145" rx="18" fill="#ffffff" fill-opacity="0.22" stroke="#ffffff" stroke-width="2.5"/>
+            <circle cx="300" cy="88" r="28" fill="#fdf2f8"/>
+            <path d="M290 95 L312 73 L318 79 L296 101 L287 104 Z" fill="#db2777"/>
+            <circle cx="290" cy="80" r="4" fill="#7c3aed"/>
+            <circle cx="310" cy="98" r="4" fill="#7c3aed"/>
+            <text x="300" y="138" fill="#ffffff" font-size="13" font-weight="800" text-anchor="middle" font-family="sans-serif">FUTURE CAREERS</text>
+            <text x="300" y="156" fill="#fbcfe8" font-size="11" font-weight="700" text-anchor="middle" font-family="sans-serif">GRADE 10 • UNIT 6</text>
+            <!-- Card 3: Business & Teamwork -->
+            <rect x="410" y="45" width="155" height="130" rx="18" fill="#ffffff" fill-opacity="0.16" stroke="#f5d0fe" stroke-width="2"/>
+            <rect x="452" y="74" width="70" height="52" rx="10" fill="#fce7f3"/>
+            <path d="M475 74 V66 C475 62 478 60 482 60 H492 C496 60 499 62 499 66 V74" stroke="#fbcfe8" stroke-width="3.5" fill="none"/>
+            <rect x="481" y="94" width="12" height="10" rx="2" fill="#7c3aed"/>
+            <text x="487" y="160" fill="#ffffff" font-size="12" font-weight="800" text-anchor="middle" font-family="sans-serif">DREAM JOB</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="hero-body">
+        <span class="pill-tag">10 клас • Focus 2: Unit 6 (Just the Job!)</span>
+        <h1 class="hero-title">Interactive English Lab: Careers &amp; Work</h1>
+        <p class="hero-sub">
+          Complete 4 interactive tasks in English: <strong>Career Vocabulary Drag &amp; Drop</strong>, <strong>Second Conditional Builder</strong>, an <strong>HR Job Interview Simulation</strong>, and <strong>Use of English</strong>. At the end, you will see your final score, explanations of any mistakes, and download your PDF certificate!
+        </p>
+
+        <form id="regForm">
+          <div class="reg-grid">
+            <div class="form-group">
+              <label for="studentName">Прізвище та ім'я учня / учениці *</label>
+              <input type="text" id="studentName" class="form-control" placeholder="Наприклад: Міша Олейнік" required minlength="2" />
+            </div>
+            <div class="form-group">
+              <label for="studentClass">Обери свій клас *</label>
+              <select id="studentClass" class="form-control" required>
+                <option value="" disabled selected>-- Обери клас (10-А ... 10-К) --</option>
+                <option value="10-А">10-А</option>
+                <option value="10-Б">10-Б</option>
+                <option value="10-В">10-В</option>
+                <option value="10-Г">10-Г</option>
+                <option value="10-Д">10-Д</option>
+                <option value="10-Ж">10-Ж</option>
+                <option value="10-К">10-К</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            Start Interactive Tasks →
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE WORKSPACE -->
+    <section id="workspace" class="workspace">
+      <!-- Encouraging Live Banner -->
+      <div class="cheer-bar">
+        <span id="cheerText">💜 You’re doing great! Take your time and read each English clue carefully.</span>
+        <span id="stepCounterText" style="color:var(--magenta-600);">Task 1 of 4</span>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-wrap">
+        <div class="progress-top">
+          <span>Module Completion</span>
+          <span id="progressPctText">25%</span>
+        </div>
+        <div class="progress-track">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Step Navigation -->
+      <div class="step-pills">
+        <button type="button" class="step-pill active" data-step="0" onclick="goStep(0)">
+          <div class="step-pill-sub">Task 1 • Drag &amp; Drop</div>
+          <div class="step-pill-title">Work Vocabulary</div>
+        </button>
+        <button type="button" class="step-pill" data-step="1" onclick="goStep(1)">
+          <div class="step-pill-sub">Task 2 • Drag &amp; Drop</div>
+          <div class="step-pill-title">Second Conditional</div>
+        </button>
+        <button type="button" class="step-pill" data-step="2" onclick="goStep(2)">
+          <div class="step-pill-sub">Task 3 • Simulation</div>
+          <div class="step-pill-title">Job Interview</div>
+        </button>
+        <button type="button" class="step-pill" data-step="3" onclick="goStep(3)">
+          <div class="step-pill-sub">Task 4 • Focus Check</div>
+          <div class="step-pill-title">Job vs Work &amp; Preps</div>
+        </button>
+      </div>
+
+      <!-- TASK 1: DRAG & DROP VOCABULARY -->
+      <article id="card0" class="task-card active">
+        <div class="task-head">
+          <span class="pill-tag">Focus 2 • Unit 6.1 Vocabulary</span>
+          <h2>1. Sort the Work Expressions (Drag &amp; Drop)</h2>
+        </div>
+        <div class="instruction-en">
+          <strong>Instructions:</strong> Drag each English phrase into the correct category box below (or tap a phrase and then tap the target box on your phone). Tap a placed phrase to move it back.
+        </div>
+
+        <div id="bank0" class="word-bank" ondragover="allowDrop(event)" ondrop="dropBank0(event)"></div>
+
+        <div class="zones-grid">
+          <div class="drop-box" ondragover="allowDrop(event)" ondrop="dropZone0(event, 'conditions')" onclick="tapZone0('conditions')">
+            <div class="drop-box-head">💼 Conditions &amp; Pay</div>
+            <div class="drop-list" id="zone-conditions"></div>
+          </div>
+          <div class="drop-box" ondragover="allowDrop(event)" ondrop="dropZone0(event, 'qualities')" onclick="tapZone0('qualities')">
+            <div class="drop-box-head">🌟 Personal Qualities</div>
+            <div class="drop-list" id="zone-qualities"></div>
+          </div>
+          <div class="drop-box" ondragover="allowDrop(event)" ondrop="dropZone0(event, 'actions')" onclick="tapZone0('actions')">
+            <div class="drop-box-head">🚀 Career Actions</div>
+            <div class="drop-list" id="zone-actions"></div>
+          </div>
+        </div>
+
+        <div class="nav-footer">
+          <button type="button" class="btn btn-outline" onclick="resetTask1()">Reset Cards</button>
+          <button type="button" class="btn btn-primary" onclick="goStep(1)">Next: Second Conditional →</button>
+        </div>
+      </article>
+
+      <!-- TASK 2: SECOND CONDITIONAL DRAG & DROP -->
+      <article id="card1" class="task-card">
+        <div class="task-head">
+          <span class="pill-tag">Focus 2 • Unit 6.2 Grammar</span>
+          <h2>2. Complete the Second Conditional Sentences</h2>
+        </div>
+        <div class="instruction-en">
+          <strong>Instructions:</strong> Drag the correct verb form into each blank (or tap a word in the purple bank, then tap an empty slot). Remember: <em>If + Past Simple, ... would + Infinitive</em>.
+        </div>
+
+        <div id="bank1" class="word-bank"></div>
+        <div id="condList" class="cond-list"></div>
+
+        <div class="nav-footer">
+          <button type="button" class="btn btn-outline" onclick="goStep(0)">← Previous</button>
+          <button type="button" class="btn btn-primary" onclick="goStep(2)">Next: Job Interview →</button>
+        </div>
+      </article>
+
+      <!-- TASK 3: JOB INTERVIEW SIMULATION -->
+      <article id="card2" class="task-card">
+        <div class="task-head">
+          <span class="pill-tag">Focus 2 • Unit 6.6 Speaking Simulation</span>
+          <h2>3. HR Job Interview Role-Play</h2>
+        </div>
+        <div class="instruction-en">
+          <strong>Scenario:</strong> You are interviewing for a junior creative role at <em>PurpleWave Media</em>. Select the most professional and grammatically accurate English response for each stage.
+        </div>
+
+        <div id="simContainer"></div>
+
+        <div class="nav-footer">
+          <button type="button" class="btn btn-outline" onclick="goStep(1)">← Previous</button>
+          <button type="button" class="btn btn-primary" onclick="goStep(3)">Next: Final Use of English →</button>
+        </div>
+      </article>
+
+      <!-- TASK 4: USE OF ENGLISH -->
+      <article id="card3" class="task-card">
+        <div class="task-head">
+          <span class="pill-tag">Focus 2 • Unit 6.3 &amp; 6.5 Use of English</span>
+          <h2>4. Collocations: <em>job / work</em> &amp; Prepositions</h2>
+        </div>
+        <div class="instruction-en">
+          <strong>Instructions:</strong> Choose the best option to complete each sentence accurately.
+        </div>
+
+        <div id="uoeContainer"></div>
+
+        <div class="nav-footer">
+          <button type="button" class="btn btn-outline" onclick="goStep(2)">← Previous</button>
+          <button type="button" class="btn btn-primary" onclick="finishAllTasks()">
+            Finish Test &amp; See My Score ✨
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <!-- FINAL RESULT & MISTAKE EXPLANATION SCREEN -->
+    <section id="finalSection" class="final-screen">
+      <div class="result-hero">
+        <div style="font-size:0.85rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#fbcfe8;">
+          Focus 2 • Unit 6: Work — Final Result
+        </div>
+        <h2 id="finalCongratsTitle" style="font-size:1.65rem; margin-top:6px;">
+          Вітаємо! Ваші бали:
+        </h2>
+        <div id="finalGradeBadge" class="grade-big">12 / 12</div>
+        <div id="finalRawInfo" style="font-size:0.92rem; color:#e9d5ff; font-weight:600;"></div>
+        <div id="finalEncourageBox" class="encourage-box"></div>
+      </div>
+
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px;">
+        <button type="button" class="btn btn-primary" style="flex:1; min-width:220px;" onclick="downloadPDF()">
+          📄 Завантажити результат у PDF
+        </button>
+        <button type="button" class="btn btn-outline" style="flex:1; min-width:220px;" onclick="retakeTest()">
+          🔄 Пройти тест заново
+        </button>
+      </div>
+
+      <div class="mistakes-section">
+        <h3>📝 Розбір відповідей та пояснення помилок:</h3>
+        <div id="mistakesList"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ==========================================
+    // DATA & CURRICULUM (Focus 2, Unit 6)
+    // ==========================================
+    const student = { name: '', group: '' };
+
+    const cheers = [
+      '💜 You’re doing great! Keep matching those Focus 2 career expressions!',
+      '✨ Awesome progress! Pay attention to verb tenses in Second Conditional.',
+      '🚀 Almost there! Show your best professional English in the HR simulation!',
+      '🌟 Final stretch! You’ve worked hard—finish strong and check your score!'
+    ];
+
+    // Task 1: 9 items
+    const t1Items = [
+      { id: 'v1', text: 'earn a high salary', cat: 'conditions', ua: 'заробляти високу зарплату — це умова/оплата праці (Conditions & Pay).' },
+      { id: 'v2', text: 'work long hours', cat: 'conditions', ua: 'працювати багато годин — стосується умов та графіка роботи (Conditions & Pay).' },
+      { id: 'v3', text: 'paid holidays', cat: 'conditions', ua: 'оплачувана відпустка — це бонус/умова роботи (Conditions & Pay).' },
+      { id: 'v4', text: 'reliable and punctual', cat: 'qualities', ua: 'надійний та пунктуальний — особисті якості працівника (Personal Qualities).' },
+      { id: 'v5', text: 'creative problem-solver', cat: 'qualities', ua: 'креативний у вирішенні проблем — риса характеру/навичка (Personal Qualities).' },
+      { id: 'v6', text: 'good team player', cat: 'qualities', ua: 'хороший командний гравець — якість працівника (Personal Qualities).' },
+      { id: 'v7', text: 'apply for a job', cat: 'actions', ua: 'подавати заявку на роботу — активна дія у кар’єрі (Career Actions).' },
+      { id: 'v8', text: 'get promoted', cat: 'actions', ua: 'отримати підвищення — кар’єрна подія/дія (Career Actions).' },
+      { id: 'v9', text: 'resign from a post', cat: 'actions', ua: 'звільнитися з посади — кар’єрна дія (Career Actions).' }
+    ];
+    let t1Placements = {}; // id -> cat
+    let selectedChip1 = null;
+
+    // Task 2: 5 items
+    const t2BankWords = ['would apply', 'offered', 'worked', 'wouldn’t be', 'had'];
+    const t2Items = [
+      {
+        before: 'If I ',
+        answer: 'had',
+        after: ' more work experience, I would get that manager position.',
+        explain: 'У частині з «If» у Second Conditional вживаємо Past Simple (had), а не would.'
+      },
+      {
+        before: 'She ',
+        answer: 'would apply',
+        after: ' for the job in London if her English were fluent.',
+        explain: 'У головній частині (без if) вживаємо would + початкову форму дієслова (would apply).'
+      },
+      {
+        before: 'If they ',
+        answer: 'offered',
+        after: ' me a part-time contract, I would accept it immediately.',
+        explain: 'Після «If» для уявної ситуації потрібен Past Simple — offered.'
+      },
+      {
+        before: 'He ',
+        answer: 'wouldn’t be',
+        after: ' so stressed if he didn’t work overtime every day.',
+        explain: 'У головній частині речення ставимо заперечну форму would + not + be (wouldn’t be).'
+      },
+      {
+        before: 'What would you do if you ',
+        answer: 'worked',
+        after: ' from home all year?',
+        explain: 'Після «if» вживаємо Past Simple (worked) для гіпотетичної ситуації в теперішньому.'
+      }
+    ];
+    let t2Slots = [null, null, null, null, null];
+    let selectedChip2 = null;
+
+    // Task 3: 5 items (HR Interview Simulation)
+    const t3Steps = [
+      {
+        q: 'HR Sarah: “Welcome! Why did you decide to apply for this junior position at PurpleWave Media?”',
+        options: [
+          'I just want fast money and my parents told me to find something.',
+          'I’m passionate about digital content, and this role matches my creative skills and desire to grow.',
+          'Because school is boring and I want to quit studying.'
+        ],
+        correct: 1,
+        explain: 'На співбесіді варто підкреслювати мотивацію та навички: «passionate about... matches my skills».'
+      },
+      {
+        q: 'HR Sarah: “How would you describe your strengths when working to a strict deadline?”',
+        options: [
+          'I am reliable, well-organised, and I always manage my time to meet deadlines.',
+          'When deadlines are tight, I usually panic and ask colleagues to finish my work.',
+          'I don’t really care about deadlines if the task is difficult.'
+        ],
+        correct: 0,
+        explain: 'Ключова лексика Focus 2 Unit 6: reliable (надійний), well-organised (організований), meet deadlines (вкладатися в дедлайни).'
+      },
+      {
+        q: 'HR Sarah: “If a client weren’t satisfied with your design idea, what would you do?”',
+        options: [
+          'If a client wasn’t happy, I will argue until they accept my idea.',
+          'If a client weren’t satisfied, I would listen to their feedback and propose improved options.',
+          'I would resign on the same day because I hate criticism.'
+        ],
+        correct: 1,
+        explain: 'Правильна граматика Second Conditional (If + Past Simple, would + Infinitive) та конструктивна реакція на фідбек.'
+      },
+      {
+        q: 'HR Sarah: “What kind of working hours are you looking for during the school year?”',
+        options: [
+          'I am looking for a part-time job with flexible hours so I can balance school and work.',
+          'I want to work 65 hours a week with no days off.',
+          'I want a full-time night shift every school day.'
+        ],
+        correct: 0,
+        explain: 'Для 10-класника природний вибір — «part-time job» (неповний робочий день) та «flexible hours» (гнучкий графік).'
+      },
+      {
+        q: 'HR Sarah: “Do you have any questions for our team before we finish?”',
+        options: [
+          'No, nothing. Can I leave now?',
+          'Yes! What opportunities for training and mentorship does a new intern receive?',
+          'How many paid holidays can I take next Monday?'
+        ],
+        correct: 1,
+        explain: 'Запитання про навчання та розвиток («opportunities for training») показує щиру зацікавленість у професії.'
+      }
+    ];
+    let t3Answers = [null, null, null, null, null];
+
+    // Task 4: 5 items (Use of English)
+    const t4Items = [
+      {
+        q: '1. My sister has just got a well-paid ___ in an international IT company.',
+        options: ['work', 'job', 'career'],
+        correct: 1,
+        explain: '«Job» — злічуваний іменник (можна сказати «a well-paid job»), тоді як «work» — незлічуваний.'
+      },
+      {
+        q: '2. Our project manager is responsible ___ coordinating the design team.',
+        options: ['for', 'about', 'with'],
+        correct: 0,
+        explain: 'Стале словосполучення з прийменником: «be responsible for» (бути відповідальним за щось).'
+      },
+      {
+        q: '3. Many developers enjoy working ___ home twice a week.',
+        options: ['in', 'at', 'from'],
+        correct: 2,
+        explain: 'У підручнику Focus 2 вживається вираз «work from home» (працювати дистанційно з дому).'
+      },
+      {
+        q: '4. We still have a lot of ___ to complete before tomorrow’s presentation.',
+        options: ['job', 'jobs', 'work'],
+        correct: 2,
+        explain: 'Після «a lot of» у значенні «багато роботи/справ» вживається незлічуваний іменник «work».'
+      },
+      {
+        q: '5. Over 150 young people applied ___ the position of junior content creator.',
+        options: ['to', 'for', 'on'],
+        correct: 1,
+        explain: 'Дієслово «apply» вживається з прийменником «for», коли йдеться про посаду або роботу: «apply for a position/job».'
+      }
+    ];
+    let t4Answers = [null, null, null, null, null];
+
+    // ==========================================
+    // REGISTRATION & NAVIGATION
+    // ==========================================
+    document.getElementById('regForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const n = document.getElementById('studentName').value.trim();
+      const c = document.getElementById('studentClass').value;
+      if (!n || !c) return;
+
+      student.name = n;
+      student.group = c;
+
+      document.getElementById('pillName').textContent = student.name;
+      document.getElementById('pillClass').textContent = student.group;
+      document.getElementById('studentPill').classList.add('visible');
+
+      document.getElementById('regSection').style.display = 'none';
+      document.getElementById('workspace').classList.add('active');
+
+      renderTask1();
+      renderTask2();
+      renderTask3();
+      renderTask4();
+      goStep(0);
+    });
+
+    function goStep(idx) {
+      document.querySelectorAll('.step-pill').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+      document.querySelectorAll('.task-card').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+
+      const pct = (idx + 1) * 25;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressPctText').textContent = pct + '%';
+      document.getElementById('stepCounterText').textContent = `Task ${idx + 1} of 4`;
+      document.getElementById('cheerText').textContent = cheers[idx];
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==========================================
+    // TASK 1 RENDER & DRAG/TAP LOGIC
+    // ==========================================
+    function renderTask1() {
+      const bank = document.getElementById('bank0');
+      bank.innerHTML = '';
+      ['conditions', 'qualities', 'actions'].forEach(cat => {
+        document.getElementById('zone-' + cat).innerHTML = '';
+      });
+
+      t1Items.forEach(item => {
+        const chip = document.createElement('div');
+        chip.className = 'chip' + (selectedChip1 === item.id ? ' selected' : '');
+        chip.textContent = item.text;
+        chip.draggable = true;
+
+        chip.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('text/plain', item.id);
+        });
+
+        chip.addEventListener('click', e => {
+          e.stopPropagation();
+          if (t1Placements[item.id]) {
+            delete t1Placements[item.id];
+            selectedChip1 = null;
+            renderTask1();
+          } else {
+            selectedChip1 = (selectedChip1 === item.id) ? null : item.id;
+            renderTask1();
+          }
+        });
+
+        const placedCat = t1Placements[item.id];
+        if (placedCat) {
+          document.getElementById('zone-' + placedCat).appendChild(chip);
+        } else {
+          bank.appendChild(chip);
+        }
+      });
+    }
+
+    function allowDrop(e) { e.preventDefault(); }
+
+    function dropZone0(e, cat) {
+      e.preventDefault();
+      const id = e.dataTransfer.getData('text/plain');
+      if (t1Items.some(x => x.id === id)) {
+        t1Placements[id] = cat;
+        selectedChip1 = null;
+        renderTask1();
+      }
+    }
+
+    function dropBank0(e) {
+      e.preventDefault();
+      const id = e.dataTransfer.getData('text/plain');
+      if (t1Placements[id]) {
+        delete t1Placements[id];
+        selectedChip1 = null;
+        renderTask1();
+      }
+    }
+
+    function tapZone0(cat) {
+      if (!selectedChip1) return;
+      t1Placements[selectedChip1] = cat;
+      selectedChip1 = null;
+      renderTask1();
+    }
+
+    function resetTask1() {
+      t1Placements = {};
+      selectedChip1 = null;
+      renderTask1();
+    }
+
+    // ==========================================
+    // TASK 2 RENDER & DRAG/TAP LOGIC
+    // ==========================================
+    function renderTask2() {
+      const bank = document.getElementById('bank1');
+      bank.innerHTML = '';
+
+      t2BankWords.forEach(word => {
+        if (t2Slots.includes(word)) return;
+        const chip = document.createElement('div');
+        chip.className = 'chip' + (selectedChip2 === word ? ' selected' : '');
+        chip.textContent = word;
+        chip.draggable = true;
+
+        chip.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('text/plain', word);
+        });
+
+        chip.addEventListener('click', () => {
+          selectedChip2 = (selectedChip2 === word) ? null : word;
+          renderTask2();
+        });
+
+        bank.appendChild(chip);
+      });
+
+      const list = document.getElementById('condList');
+      list.innerHTML = '';
+      t2Items.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = 'cond-row';
+
+        const slot = document.createElement('span');
+        slot.className = 'slot-blank' + (t2Slots[idx] ? ' filled' : '');
+        slot.textContent = t2Slots[idx] || 'drop / tap word';
+
+        slot.addEventListener('dragover', e => e.preventDefault());
+        slot.addEventListener('drop', e => {
+          e.preventDefault();
+          const w = e.dataTransfer.getData('text/plain');
+          if (t2BankWords.includes(w)) {
+            t2Slots[idx] = w;
+            selectedChip2 = null;
+            renderTask2();
+          }
+        });
+
+        slot.addEventListener('click', () => {
+          if (selectedChip2) {
+            t2Slots[idx] = selectedChip2;
+            selectedChip2 = null;
+            renderTask2();
+          } else if (t2Slots[idx]) {
+            t2Slots[idx] = null;
+            renderTask2();
+          }
+        });
+
+        row.append(`${idx + 1}. ${item.before}`, slot, item.after);
+        list.appendChild(row);
+      });
+    }
+
+    // ==========================================
+    // TASK 3 RENDER (SIMULATION)
+    // ==========================================
+    function renderTask3() {
+      const box = document.getElementById('simContainer');
+      box.innerHTML = '';
+
+      t3Steps.forEach((step, sIdx) => {
+        const card = document.createElement('div');
+        card.className = 'sim-box';
+
+        card.innerHTML = `
+          <div class="hr-top">
+            <div class="hr-badge">HR</div>
+            <div>
+              <div style="font-weight:800; font-size:0.95rem;">Stage ${sIdx + 1} of 5</div>
+              <div style="font-size:0.78rem; color:#fbcfe8;">PurpleWave Media Interview</div>
+            </div>
+          </div>
+          <div class="hr-bubble">${step.q}</div>
+        `;
+
+        const choicesWrap = document.createElement('div');
+        choicesWrap.className = 'sim-choices';
+
+        step.options.forEach((optText, oIdx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'sim-choice-btn' + (t3Answers[sIdx] === oIdx ? ' picked' : '');
+          btn.textContent = optText;
+          btn.onclick = () => {
+            t3Answers[sIdx] = oIdx;
+            renderTask3();
+          };
+          choicesWrap.appendChild(btn);
+        });
+
+        card.appendChild(choicesWrap);
+        box.appendChild(card);
+      });
+    }
+
+    // ==========================================
+    // TASK 4 RENDER (USE OF ENGLISH)
+    // ==========================================
+    function renderTask4() {
+      const box = document.getElementById('uoeContainer');
+      box.innerHTML = '';
+
+      t4Items.forEach((item, qIdx) => {
+        const card = document.createElement('div');
+        card.className = 'uoe-item';
+
+        const qEl = document.createElement('div');
+        qEl.className = 'uoe-q';
+        qEl.textContent = item.q;
+
+        const optsWrap = document.createElement('div');
+        optsWrap.className = 'uoe-opts';
+
+        item.options.forEach((opt, oIdx) => {
+          const pill = document.createElement('button');
+          pill.type = 'button';
+          pill.className = 'opt-pill' + (t4Answers[qIdx] === oIdx ? ' selected' : '');
+          pill.textContent = opt;
+          pill.onclick = () => {
+            t4Answers[qIdx] = oIdx;
+            renderTask4();
+          };
+          optsWrap.appendChild(pill);
+        });
+
+        card.append(qEl, optsWrap);
+        box.appendChild(card);
+      });
+    }
+
+    // ==========================================
+    // FINAL GRADING & MISTAKE EXPLANATIONS
+    // ==========================================
+    let lastReportData = null;
+
+    function finishAllTasks() {
+      let rawScore = 0;
+      const totalRaw = 24; // 9 + 5 + 5 + 5
+      const mistakes = [];
+
+      const catNames = {
+        conditions: 'Conditions & Pay',
+        qualities: 'Personal Qualities',
+        actions: 'Career Actions'
+      };
+
+      // Check Task 1
+      t1Items.forEach(item => {
+        const userCat = t1Placements[item.id];
+        if (userCat === item.cat) {
+          rawScore++;
+        } else {
+          mistakes.push({
+            task: 'Task 1 (Work Vocabulary)',
+            prompt: `Вираз: «${item.text}»`,
+            userAns: userCat ? catNames[userCat] : 'Не розподілено',
+            rightAns: catNames[item.cat],
+            explain: item.ua
+          });
+        }
+      });
+
+      // Check Task 2
+      t2Items.forEach((item, idx) => {
+        const userWord = t2Slots[idx];
+        if (userWord === item.answer) {
+          rawScore++;
+        } else {
+          mistakes.push({
+            task: 'Task 2 (Second Conditional)',
+            prompt: `${item.before} [ ___ ] ${item.after}`,
+            userAns: userWord || 'Пропуск не заповнено',
+            rightAns: item.answer,
+            explain: item.explain
+          });
+        }
+      });
+
+      // Check Task 3
+      t3Steps.forEach((step, idx) => {
+        const choice = t3Answers[idx];
+        if (choice === step.correct) {
+          rawScore++;
+        } else {
+          mistakes.push({
+            task: `Task 3 (HR Interview • Stage ${idx + 1})`,
+            prompt: step.q,
+            userAns: choice !== null ? step.options[choice] : 'Відповідь не обрано',
+            rightAns: step.options[step.correct],
+            explain: step.explain
+          });
+        }
+      });
+
+      // Check Task 4
+      t4Items.forEach((item, idx) => {
+        const choice = t4Answers[idx];
+        if (choice === item.correct) {
+          rawScore++;
+        } else {
+          mistakes.push({
+            task: 'Task 4 (Use of English)',
+            prompt: item.q,
+            userAns: choice !== null ? item.options[choice] : 'Відповідь не обрано',
+            rightAns: item.options[item.correct],
+            explain: item.explain
+          });
+        }
+      });
+
+      // Convert to 12-point scale
+      const grade12 = Math.max(1, Math.round((rawScore / totalRaw) * 12));
+      const pct = Math.round((rawScore / totalRaw) * 100);
+
+      // Encouraging message based on score
+      let cheerMsg = '';
+      if (grade12 >= 10) {
+        cheerMsg = `🌟 Неймовірний результат! Ти справжній профі у темі «World of Work» і чудово володієш лексикою та граматикою Focus 2! Так тримати!`;
+      } else if (grade12 >= 7) {
+        cheerMsg = `💜 Ти молодець! Це дуже хороший результат! Переглянь пояснення кількох помилок нижче — і наступного разу легко візьмеш 12/12!`;
+      } else {
+        cheerMsg = `🤗 Не сумуй! Це класне тренування, а кожна помилка — це крок до успіху. Почитай підказки нижче, ти точно впораєшся ще краще!`;
+      }
+
+      document.getElementById('workspace').classList.remove('active');
+      document.getElementById('finalSection').classList.add('active');
+
+      document.getElementById('finalCongratsTitle').textContent = `Вітаємо, ${student.name} (${student.group})! Ваші бали:`;
+      document.getElementById('finalGradeBadge').textContent = `${grade12} / 12`;
+      document.getElementById('finalRawInfo').textContent = `Правильних відповідей: ${rawScore} із ${totalRaw} (${pct}%)`;
+      document.getElementById('finalEncourageBox').textContent = cheerMsg;
+
+      const mList = document.getElementById('mistakesList');
+      if (mistakes.length === 0) {
+        mList.innerHTML = `<div class="all-good-card">🎉 Жодної помилки! Усі 24 завдання виконано бездоганно! You are a superstar!</div>`;
+      } else {
+        mList.innerHTML = mistakes.map(m => `
+          <div class="mistake-card">
+            <div style="font-size:0.78rem; font-weight:800; color:#be123c; text-transform:uppercase;">${m.task}</div>
+            <div style="margin:4px 0; font-weight:700;">${m.prompt}</div>
+            <div>❌ Твоя відповідь: <strong>${m.userAns}</strong></div>
+            <div>✅ Правильно: <strong style="color:#15803d;">${m.rightAns}</strong></div>
+            <div style="margin-top:5px; color:#374151;">💡 <em>Пояснення:</em> ${m.explain}</div>
+          </div>
+        `).join('');
+      }
+
+      lastReportData = { grade12, rawScore, totalRaw, pct, cheerMsg, mistakes };
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function retakeTest() {
+      t1Placements = {};
+      selectedChip1 = null;
+      t2Slots = [null, null, null, null, null];
+      selectedChip2 = null;
+      t3Answers = [null, null, null, null, null];
+      t4Answers = [null, null, null, null, null];
+
+      document.getElementById('finalSection').classList.remove('active');
+      document.getElementById('workspace').classList.add('active');
+
+      renderTask1();
+      renderTask2();
+      renderTask3();
+      renderTask4();
+      goStep(0);
+    }
+
+    // ==========================================
+    // PDF CERTIFICATE DOWNLOAD
+    // ==========================================
+    function downloadPDF() {
+      if (!lastReportData) return;
+      const { grade12, rawScore, totalRaw, pct, cheerMsg, mistakes } = lastReportData;
+      const dateStr = new Date().toLocaleDateString('uk-UA');
+
+      const mistakesHtml = mistakes.length === 0
+        ? `<p style="color:#15803d; font-weight:700;">Усі завдання виконано без помилок (24/24)!</p>`
+        : mistakes.map(m => `
+            <div style="border-left:3px solid #be123c; background:#fff1f2; padding:8px 12px; margin-bottom:8px; font-size:11px;">
+              <strong>${m.task}:</strong> ${m.prompt}<br>
+              Твоя відповідь: <b>${m.userAns}</b> | Правильно: <b style="color:#15803d;">${m.rightAns}</b><br>
+              <i>Пояснення:</i> ${m.explain}
+            </div>
+          `).join('');
+
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = `
+        <div id="pdf-certificate-box">
+          <div style="background:linear-gradient(90deg, #4c1d95, #db2777); color:#ffffff; padding:20px; border-radius:12px; margin-bottom:18px;">
+            <div style="font-size:11px; text-transform:uppercase; letter-spacing:1px;">Focus 2 • Unit 6: Work (Grade 10)</div>
+            <h1 style="font-size:22px; margin:6px 0;">Сертифікат проходження тесту</h1>
+            <div style="font-size:13px;">Дата виконання: ${dateStr}</div>
+          </div>
+
+          <div style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:10px; padding:16px; margin-bottom:18px; font-size:14px;">
+            <p style="margin-bottom:6px;"><strong>Учень / Учениця:</strong> ${student.name}</p>
+            <p style="margin-bottom:6px;"><strong>Клас:</strong> ${student.group}</p>
+            <p style="margin-bottom:6px;"><strong>Підсумкова оцінка:</strong> <span style="font-size:18px; font-weight:800; color:#6d28d9;">${grade12} / 12 балів</span> (${rawScore} із ${totalRaw}, ${pct}%)</p>
+            <p style="margin-top:10px; color:#4c1d95;">${cheerMsg}</p>
+          </div>
+
+          <h3 style="font-size:14px; color:#2e1065; margin-bottom:10px;">Аналіз відповідей:</h3>
+          ${mistakesHtml}
+        </div>
+      `;
+
+      const safeName = student.name.replace(/[^a-zA-Zа-яА-ЯіІїЇєЄ0-9_-]/g, '_');
+      html2pdf().set({
+        margin: 10,
+        filename: `Focus2_Unit6_${student.group}_${safeName}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(wrapper.firstElementChild).save();
+    }
+  </script>
+</body>
+</html>
